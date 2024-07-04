@@ -1,0 +1,6 @@
+# deps
+node_modules/
+
+# misc
+.DS_Store
+dev-sqlite
