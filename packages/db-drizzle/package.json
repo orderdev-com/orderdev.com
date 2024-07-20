@@ -2,19 +2,12 @@
 	"name": "db-drizzle",
 	"version": "0.0.0",
 	"type": "module",
-	"module": "src/index.ts",
-	"main": "src/index.ts",
-	"exports": {
-		".": {
-			"types": "./src/index.ts"
-		}
+	"scripts": {
+		"dev": "run-s wait-turso-dev-port && pnpm generate && tsx src/migrate.ts",
+		"wait-turso-dev-port": "wait-on tcp:8022",
+		"generate": "drizzle-kit generate",
+		"migrate": "drizzle-kit migrate"
 	},
-  "scripts": {
-    "dev": "run-s wait-turso-dev-port && pnpm generate && tsx src/migrate.ts",
-    "wait-turso-dev-port": "wait-on tcp:8022",
-    "generate": "drizzle-kit generate",
-    "migrate": "drizzle-kit migrate"
-  },
 	"dependencies": {
 		"@libsql/client": "^0.7.0",
 		"dotenv": "^16.4.5",
