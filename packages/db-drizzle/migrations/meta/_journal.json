@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1721505298843,
+      "tag": "0000_worthless_catseye",
+      "breakpoints": true
+    }
+  ]
+}
