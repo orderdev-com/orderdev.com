@@ -10,6 +10,9 @@
     "astro": "astro"
   },
   "dependencies": {
+    "auth-lucia": "workspace:*",
+    "db-drizzle": "workspace:*",
+    "drizzle-orm": "^0.31.2",
     "api-hono": "workspace:*",
     "astro": "^4.11.5",
     "@astrojs/check": "^0.7.0",

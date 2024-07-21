@@ -3,12 +3,13 @@ import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
 import { emailVerificationTokenTable, sessionTable, userTable } from "db-drizzle/src/schema";
 import { generateIdFromEntropySize } from "lucia";
 import { TimeSpan, createDate } from "oslo";
+import { verifyRequestOrigin } from "lucia";
 import { eq } from "drizzle-orm";
 import db from "db-drizzle/src/db";
 
 const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
 
-export const lucia = new Lucia(adapter, {
+export const luciaInstance = new Lucia(adapter, {
   getUserAttributes: (attributes) => {
     return {
       email: attributes.email,
@@ -41,10 +42,12 @@ export const createEmailVerificationToken = async (
   return tokenId;
 };
 
+export const verifyRequestOriginWrapper = verifyRequestOrigin;
+export const generateIdFromEntropySizeWrapper = generateIdFromEntropySize;
 
 declare module "lucia" {
   interface Register {
-    Lucia: typeof lucia;
+    Lucia: typeof luciaInstance;
     DatabaseUserAttributes: DatabaseUserAttributes;
   }
 }
