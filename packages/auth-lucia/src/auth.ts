@@ -1,6 +1,6 @@
 import { Lucia } from "lucia";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { emailVerificationTokenTable, sessionTable, userTable } from "db-drizzle/src/schema";
+import { emailVerificationTokenTable, otpTable, sessionTable, userTable } from "db-drizzle/src/schema";
 import { generateIdFromEntropySize } from "lucia";
 import { TimeSpan, createDate } from "oslo";
 import { verifyRequestOrigin } from "lucia";
@@ -40,6 +40,37 @@ export const createEmailVerificationToken = async (
     expires_at: createDate(new TimeSpan(2, "h")).getTime(),
   });
   return tokenId;
+};
+
+const generateCode = () => {
+  const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    code += characters[randomIndex];
+  }
+  return code.toUpperCase();
+}
+
+export const createEmailOTP = async (
+  userId: string,
+  email: string
+) => {
+  await db
+    .delete(otpTable)
+    .where(eq(otpTable.user_id, userId));
+  
+  const otpId = generateIdFromEntropySize(25); // 40 characters long
+  const code = generateCode();
+
+  await db.insert(otpTable).values({
+    id: otpId,
+    user_id: userId,
+    code,
+    email,
+    expires_at: createDate(new TimeSpan(10, "m")).getTime()
+  });
+  return code;
 };
 
 export const verifyRequestOriginWrapper = verifyRequestOrigin;

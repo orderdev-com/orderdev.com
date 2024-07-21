@@ -6,7 +6,7 @@ const userTable = sqliteTable("user", {
     email_verified: integer("email_verified", { mode: 'boolean' }).default(false),
 });
 
-const sessionTable = sqliteTable("session", {
+const sessionTable = sqliteTable("user_session", {
     id: text("id").notNull().primaryKey(),
     userId: text("user_id")
         .notNull()
@@ -14,7 +14,7 @@ const sessionTable = sqliteTable("session", {
     expiresAt: integer("expires_at").notNull(),
 });
 
-const emailVerificationTokenTable = sqliteTable("email_verification_token", {
+const emailVerificationTokenTable = sqliteTable("user_email_verification_token", {
     id: text("id").notNull().primaryKey(),
     user_id: text("user_id")
         .notNull()
@@ -23,4 +23,12 @@ const emailVerificationTokenTable = sqliteTable("email_verification_token", {
     expires_at: integer("expires_at").notNull(),
 });
 
-export { userTable, sessionTable, emailVerificationTokenTable };
+const otpTable = sqliteTable("user_otp", {
+    id: text("id").notNull().primaryKey(),
+    user_id: text("user_id").notNull().references(() => userTable.id),
+    email: text("email").notNull(),
+    code: text("code").notNull(),
+    expires_at: integer("expires_at").notNull()
+});
+
+export { userTable, sessionTable, emailVerificationTokenTable, otpTable };
