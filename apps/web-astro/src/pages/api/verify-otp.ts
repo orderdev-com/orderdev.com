@@ -27,6 +27,9 @@ export const POST: APIRoute = async ({ request, redirect, cookies }) => {
         return redirect(`/error?msg=otp_not_found`);
     }
     if (new Date() > new Date(otpData.expires_at)) {
+        await db
+            .delete(otpTable)
+            .where(eq(otpTable.id, otpData.id));
         return redirect(`/error?msg=expired`);
     }
 
