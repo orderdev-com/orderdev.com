@@ -1,6 +1,6 @@
 import { Lucia } from "lucia";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { emailVerificationTokenTable, otpTable, sessionTable, userTable } from "db-drizzle/src/schema";
+import { otpTable, sessionTable, userTable } from "db-drizzle/src/schema";
 import { generateIdFromEntropySize } from "lucia";
 import { TimeSpan, createDate } from "oslo";
 import { verifyRequestOrigin } from "lucia";
@@ -25,22 +25,6 @@ export const luciaInstance = new Lucia(adapter, {
   },
 });
 
-export const createEmailVerificationToken = async (
-  userId: string,
-  email: string
-) => {
-  await db
-    .delete(emailVerificationTokenTable)
-    .where(eq(emailVerificationTokenTable.user_id, userId));
-  const tokenId = generateIdFromEntropySize(25); // 40 characters long
-  await db.insert(emailVerificationTokenTable).values({
-    id: tokenId,
-    user_id: userId,
-    email,
-    expires_at: createDate(new TimeSpan(2, "h")).getTime(),
-  });
-  return tokenId;
-};
 
 const generateCode = () => {
   const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';

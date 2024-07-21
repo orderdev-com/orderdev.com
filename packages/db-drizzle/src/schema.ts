@@ -14,15 +14,6 @@ const sessionTable = sqliteTable("user_session", {
     expiresAt: integer("expires_at").notNull(),
 });
 
-const emailVerificationTokenTable = sqliteTable("user_email_verification_token", {
-    id: text("id").notNull().primaryKey(),
-    user_id: text("user_id")
-        .notNull()
-        .references(() => userTable.id),
-    email: text("email").notNull(),
-    expires_at: integer("expires_at").notNull(),
-});
-
 const otpTable = sqliteTable("user_otp", {
     id: text("id").notNull().primaryKey(),
     user_id: text("user_id").notNull().references(() => userTable.id),
@@ -31,4 +22,4 @@ const otpTable = sqliteTable("user_otp", {
     expires_at: integer("expires_at").notNull()
 });
 
-export { userTable, sessionTable, emailVerificationTokenTable, otpTable };
+export { userTable, sessionTable, otpTable };

@@ -1,60 +1,9 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "7a3f82a3-8a3b-40e9-b898-b2a9b298f77b",
+  "id": "4e374856-a66e-471c-b17a-a475249a4e40",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "user_email_verification_token": {
-      "name": "user_email_verification_token",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "expires_at": {
-          "name": "expires_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "user_email_verification_token_user_id_user_id_fk": {
-          "name": "user_email_verification_token_user_id_user_id_fk",
-          "tableFrom": "user_email_verification_token",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
     "user_otp": {
       "name": "user_otp",
       "columns": {
