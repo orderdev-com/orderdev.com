@@ -1,16 +1,19 @@
-import { luciaInstance, verifyRequestOriginWrapper } from "auth-lucia/src/auth";
+// import { luciaInstance, verifyRequestOriginWrapper } from "auth-lucia/src/auth";
+import { luciaInstance } from "auth-lucia/src/auth";
 import { defineMiddleware } from "astro:middleware";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-	if (context.request.method !== "GET") {
-		const originHeader = context.request.headers.get("Origin");
-		const hostHeader = context.request.headers.get("Host");
-		if (!originHeader || !hostHeader || !verifyRequestOriginWrapper(originHeader, [hostHeader])) {
-			return new Response(null, {
-				status: 403
-			});
-		}
-	}
+	// 'security.checkOrigin' is ENABLED 
+	// https://docs.astro.build/en/reference/configuration-reference/#securitycheckorigin
+	// if (context.request.method !== "GET") {
+	// 	const originHeader = context.request.headers.get("Origin");
+	// 	const hostHeader = context.request.headers.get("Host");
+	// 	if (!originHeader || !hostHeader || !verifyRequestOriginWrapper(originHeader, [hostHeader])) {
+	// 		return new Response(null, {
+	// 			status: 403
+	// 		});
+	// 	}
+	// }
 
 	const sessionId = context.cookies.get(luciaInstance.sessionCookieName)?.value ?? null;
 	if (!sessionId) {
