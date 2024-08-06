@@ -19,7 +19,7 @@ export const ALL: APIRoute = async ({ request, params }) => {
         headers: request.headers,
         body: request.body,
         credentials: 'include',
-        duplex: 'half', // Add this line to resolve the error
+        ...( { duplex: 'half' } as RequestInit ), // Add this line to resolve the error
     });
 
     // Extract cookies from the response

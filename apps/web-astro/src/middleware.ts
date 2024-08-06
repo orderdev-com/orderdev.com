@@ -37,9 +37,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
     const response = await fetch(`http://localhost:3000/api/auth/check-session`, {
         method: 'GET',
         headers: context.request.headers,
-        body: context.request.body,
+        // body: context.request.body,
         credentials: 'include',
-        duplex: 'half', // Add this line to resolve the error
+        ...( { duplex: 'half' } as RequestInit ), // Add this line to resolve the error
     });
     const data = await response.json();
 
