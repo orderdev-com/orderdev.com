@@ -1,11 +1,11 @@
 import { Lucia } from "lucia";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { otpTable, sessionTable, userTable } from "db-drizzle/src/schema";
+import { otpTable, sessionTable, userTable } from "../schema";
 import { generateIdFromEntropySize } from "lucia";
 import { TimeSpan, createDate } from "oslo";
 import { verifyRequestOrigin } from "lucia";
 import { eq } from "drizzle-orm";
-import db from "db-drizzle/src/db";
+import db from "../db";
 
 const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
 

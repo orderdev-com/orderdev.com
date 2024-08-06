@@ -4,6 +4,8 @@ const user = Astro.locals.user;
 //   return Astro.redirect("/login");
 // }
 const { session } = Astro.locals;
+import SendOtpForm from '../components/SendOtpForm.astro';
+
 ---
 
 <html lang="en">
@@ -24,11 +26,9 @@ const { session } = Astro.locals;
       </form>
     }
     {!user &&
-      <form action="/api/send-otp" method="POST">
-        <input type="email" name="email" required placeholder="email address" />
-        <button>Login</button>
-        <button>Register</button>
-      </form>
+      <div>
+        SendOtpForm: <SendOtpForm />
+      </div>
     }
   </body>
 </html>

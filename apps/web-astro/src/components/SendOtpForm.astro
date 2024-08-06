@@ -1,0 +1,49 @@
+<form id="sendOtp">
+	<input type="email" name="email" required placeholder="email address" />
+	<input type="hidden" name="code" required placeholder="enter code" />
+	<button>Login</button>
+	<button>Register</button>
+</form>
+
+<script>
+	import client from "../lib/apiClient";
+
+	async function handleVerifyCodeSubmit(e: SubmitEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+		const formData = new FormData(e.target as HTMLFormElement);
+		const res = await client.api.auth["verify-otp"].$post({
+			form: {
+				email: formData.get("email")!,
+				code: formData.get("code")!,
+			},
+		});
+		if(res.ok){
+			console.log("success");
+		}
+	}
+	async function handleSubmit(e: SubmitEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+		const formData = new FormData(e.target as HTMLFormElement);
+		const res = await client.api.auth.sendOtp.$post({
+			form: {
+				email: formData.get("email")!,
+			},
+		});
+		if (res.ok) {
+			// const data = await res.json();
+			// console.log(data);
+			const codeInput = document.querySelector("input[name='code']");
+			if(codeInput){
+				codeInput.setAttribute("type", "text");
+				const form = document.getElementById("sendOtp");
+				form?.removeEventListener("submit", handleSubmit);
+				form?.addEventListener("submit", handleVerifyCodeSubmit);
+			}
+		}
+	}
+
+	const form = document.getElementById("sendOtp");
+	form?.addEventListener("submit", handleSubmit);
+</script>
