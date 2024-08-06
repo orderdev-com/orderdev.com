@@ -1,0 +1,19 @@
+{
+  "name": "web-astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "dotenv -e ../../.env -- astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.12.2",
+    "@astrojs/check": "^0.8.2",
+    "@astrojs/node": "^8.3.2",
+    "typescript": "^5.5.3",
+    "lib": "workspace:*"
+  }
+}
