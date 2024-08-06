@@ -11,15 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-		"@libsql/client": "^0.7.0",
-		"dotenv": "^16.4.5",
-		"drizzle-orm": "^0.31.2",
-    "@lucia-auth/adapter-drizzle": "^1.0.7",
-    "lucia": "^3.2.0",
-    "oslo": "^1.2.0",
-    "resend": "^3.3.0"
+		"@libsql/client": "0.8.1",
+		"dotenv": "16.4.5",
+		"drizzle-orm": "0.32.2",
+    "@lucia-auth/adapter-drizzle": "1.1.0",
+    "lucia": "3.2.0",
+    "oslo": "1.2.1",
+    "resend": "3.5.0"
 	},
 	"devDependencies": {
-		"drizzle-kit": "^0.22.8"
+		"drizzle-kit": "0.23.2"
 	}
 }

@@ -8,7 +8,7 @@ import { verifyRequestOrigin } from "lucia";
 import { and, eq } from "drizzle-orm";
 import db from "../db/db";
 
-const adapter = new DrizzleSQLiteAdapter(db, sessionTable as any, userTable as any);
+const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
 
 export const luciaInstance = new Lucia(adapter, {
   getUserAttributes: (attributes) => {
