@@ -1,0 +1,85 @@
+<div id="auth-form">
+    <form id="login-form">
+        <input type="email" name="email" required placeholder="Email address" />
+        <button type="submit">Login/Register</button>
+    </form>
+</div>
+
+<script>
+    const authFormContainerDiv = document.getElementById('auth-form');
+    const loginForm = document.getElementById('login-form') as HTMLFormElement;
+
+    if (loginForm && authFormContainerDiv) {
+        loginForm.addEventListener('submit', handleLoginSubmit);
+    }
+
+    async function handleLoginSubmit(e: Event) {
+        e.preventDefault();
+        const formData = new FormData(e.target as HTMLFormElement);
+        const email = formData.get('email') as string;
+
+        try {
+            const response = await sendOTP(formData);
+            if (response.ok) {
+                showOTPForm(email);
+            } else {
+                showError('Failed to send OTP. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error sending OTP:', error);
+            showError('An error occurred. Please try again.');
+        }
+    }
+
+    async function sendOTP(formData: FormData): Promise<Response> {
+        return fetch('/api-auth/send-otp', {
+            method: 'POST',
+            body: formData
+        });
+    }
+
+    function showOTPForm(email: string) {
+        if (authFormContainerDiv) {
+            authFormContainerDiv.innerHTML = `
+                <form id="otp-form">
+                    <input type="hidden" name="email" value="${email}">
+                    <input type="text" name="code" required placeholder="Enter OTP">
+                    <button type="submit">Verify OTP</button>
+                </form>
+            `;
+
+            const otpForm = document.getElementById('otp-form') as HTMLFormElement;
+            if (otpForm) {
+                otpForm.addEventListener('submit', handleOTPSubmit);
+            }
+        }
+    }
+
+    async function handleOTPSubmit(e: Event) {
+        e.preventDefault();
+        const otpFormData = new FormData(e.target as HTMLFormElement);
+
+        try {
+            const otpResponse = await verifyOTP(otpFormData);
+            if (otpResponse.ok) {
+                window.location.reload();
+            } else {
+                showError('Invalid OTP. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error verifying OTP:', error);
+            showError('An error occurred. Please try again.');
+        }
+    }
+
+    async function verifyOTP(formData: FormData): Promise<Response> {
+        return fetch('/api-auth/verify-otp', {
+            method: 'POST',
+            body: formData
+        });
+    }
+
+    function showError(message: string) {
+        alert(message);
+    }
+</script>

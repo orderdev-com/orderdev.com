@@ -6,7 +6,6 @@ import { luciaInstance } from "lib/auth/auth";
 export const POST: APIRoute = async ({
   locals,
   cookies,
-  redirect,
   request,
 }: APIContext) => {
   const session = locals.session;
@@ -23,5 +22,11 @@ export const POST: APIRoute = async ({
     );
   }
 
-  return redirect(origin, 303);
+  // return redirect(origin, 303);
+  return new Response(null, {
+    status: 303,
+    headers: {
+      Location: origin,
+    },
+  });
 };

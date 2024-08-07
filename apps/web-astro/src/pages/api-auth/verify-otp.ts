@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { verifyOTP } from "lib/auth/auth";
 
-export const POST: APIRoute = async ({ request, redirect, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies }) => {
     const formData = await request.formData();
     const email = formData.get("email")?.toString()!;
     const code = formData.get("code")?.toString().toUpperCase()!;
@@ -15,9 +15,11 @@ export const POST: APIRoute = async ({ request, redirect, cookies }) => {
             sessionCookie.attributes
         );
     } catch (e) { 
-        return redirect(`/error?msg=${(e as Error).message}`);
+        // return redirect(`/error?msg=${(e as Error).message}`);
+        return new Response(null, { status: 400, statusText: (e as Error).message });
     }
 
-    return redirect("/", 303);
+    // return redirect("/", 303);
+    return new Response("OTP verified", { status: 200 });
 
 }

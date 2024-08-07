@@ -1,0 +1,22 @@
+<button id="signout-btn">Sign out</button>
+<script>
+	// "/api-auth/logout" is the endpoint that logs out the user
+	const signoutBtn = document.getElementById("signout-btn");
+	if (signoutBtn) {
+		signoutBtn.addEventListener("click", async () => {
+			try {
+				const response = await fetch("/api-auth/logout", {
+					method: "POST",
+				});
+
+				if (response.ok) {
+					window.location.reload();
+				} else {
+					alert("Failed to sign out. Please try again.");
+				}
+			} catch (error) {
+				alert("Failed to sign out. Please try again.");
+			}
+		});
+	}
+</script>
