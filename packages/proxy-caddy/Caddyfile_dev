@@ -7,7 +7,7 @@ store.orderdev.local {
     tls internal
 }
 
-store.orderdev.local/api/** {
+store.orderdev.local/api/**/** {
     reverse_proxy localhost:3000
     tls internal
 }
