@@ -1,5 +1,6 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
 import { luciaAuth } from './middlewares/lucia'
 import { deleteExpiredOtps, HonoVariables, luciaInstance } from 'lib/auth/auth';
 import { usersApp } from './usersApp';
@@ -8,6 +9,14 @@ import db from 'lib/db/db';
 
 const app = new Hono<{ Variables: HonoVariables }>()
 app.use(luciaAuth);
+app.use(cors({
+  // `c` is a `Context` object
+  origin: (origin, c) => {
+    return origin.endsWith(process.env.ORIGIN!)
+      ? origin
+      : `https://${process.env.ORIGIN}`
+  },
+}))
 
 // app.get('/', (c) => {
 //   return c.text(`

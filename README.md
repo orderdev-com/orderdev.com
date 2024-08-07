@@ -21,6 +21,9 @@ dev requirements:
 add hosts file entries
 ```
 127.0.0.1 store.orderdev.local
+127.0.0.1 store2.orderdev.local
+127.0.0.1 store3.orderdev.local
+127.0.0.1 api.orderdev.local
 ```
 
 run dev:

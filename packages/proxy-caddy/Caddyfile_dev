@@ -1,5 +1,14 @@
 store.orderdev.local {
 	tls internal
-	reverse_proxy /api/* localhost:3000
-	reverse_proxy * localhost:4321
+	reverse_proxy localhost:4321
+}
+
+*.orderdev.local {
+	tls internal
+	reverse_proxy localhost:4321
+}
+
+api.orderdev.local {
+	tls internal
+	reverse_proxy localhost:3000
 }

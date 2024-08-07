@@ -1,8 +1,11 @@
 import { createMiddleware } from 'hono/factory'
 import { luciaInstance } from "lib/auth/auth";
+import { isProd } from 'lib/utils/isProd';
 
 export const luciaAuth = createMiddleware(async (c, next) => {
-    const authorizationHeader = c.req.query('auth') || c.req.header('Authorization') || c.req.header('authorization') || null;
+    const authorizationHeader = isProd ?
+        c.req.header('Authorization') || c.req.header('authorization') || null :
+        c.req.query('auth') || c.req.header('Authorization') || c.req.header('authorization') || null;
     const sessionId = luciaInstance.readBearerToken(`${authorizationHeader ?? ""}`);
     if (!sessionId) {
         c.set('session', null);
