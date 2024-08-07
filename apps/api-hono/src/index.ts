@@ -1,7 +1,7 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { luciaAuth } from './middlewares/lucia'
-import { HonoVariables } from 'lib/auth/auth';
+import { deleteExpiredOtps, HonoVariables, luciaInstance } from 'lib/auth/auth';
 
 const app = new Hono<{ Variables: HonoVariables }>()
 app.use(luciaAuth);
@@ -25,3 +25,8 @@ serve({
   fetch: app.fetch,
   port
 })
+
+const cron = async () => { 
+  await deleteExpiredOtps();
+  await luciaInstance.deleteExpiredSessions();
+}

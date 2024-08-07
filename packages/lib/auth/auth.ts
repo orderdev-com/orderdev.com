@@ -1,11 +1,11 @@
-import { Lucia } from "lucia";
-import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { otpTable, sessionTable, userTable } from "../db/schema";
-import { sendUserOtp } from "../email/sendUserOtp";
+import { Lucia, verifyRequestOrigin as verifyRequestOrigin_ORIGINAL } from "lucia";
 import { generateIdFromEntropySize } from "lucia";
 import { TimeSpan, createDate } from "oslo";
-import { verifyRequestOrigin } from "lucia";
-import { and, eq } from "drizzle-orm";
+import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
+import { and, eq, lt } from "drizzle-orm";
+import { otpTable, sessionTable, userTable } from "../db/schema";
+import { sendUserOtpEmail } from "../email/sendUserOtp";
+import { isProd } from "../utils/isProd";
 import db from "../db/db";
 
 const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
@@ -20,10 +20,22 @@ export const luciaInstance = new Lucia(adapter, {
     expires: false,
     attributes: {
       // set to `true` when using HTTPS
-      secure: process.env.NODE_ENV === "production",
+      secure: isProd,
     },
   },
 });
+
+declare module "lucia" {
+  interface Register {
+    Lucia: typeof luciaInstance;
+    DatabaseUserAttributes: DatabaseUserAttributes;
+  }
+}
+
+type DatabaseUserAttributes = {
+  email: string;
+};
+
 
 
 const generateCode = () => {
@@ -57,20 +69,8 @@ export const createEmailOTP = async (
   return code;
 };
 
-export const verifyRequestOriginWrapper = verifyRequestOrigin;
+export const verifyRequestOrigin = verifyRequestOrigin_ORIGINAL;
 export const generateIdFromEntropySizeWrapper = generateIdFromEntropySize;
-
-declare module "lucia" {
-  interface Register {
-    Lucia: typeof luciaInstance;
-    DatabaseUserAttributes: DatabaseUserAttributes;
-  }
-}
-
-type DatabaseUserAttributes = {
-  email: string;
-};
-
 
 export const sendOTP = async (email: string) => {
   const existingUserArray = await db
@@ -89,9 +89,17 @@ export const sendOTP = async (email: string) => {
     await db.insert(userTable).values(existingUser);
   }
   const code = await createEmailOTP(existingUser.id, email);
-  await sendUserOtp(email, code);
+  await sendUserOtpEmail(email, code);
   return code;
 };
+
+export const deleteExpiredOtps = async function () {
+  const result = await db
+    .delete(otpTable)
+    .where(lt(otpTable.expires_at, new Date().getTime()));
+    console.log(`Deleted expired OTPs result.rowsAffected: ${result.rowsAffected}`);
+  //result.rowsAffected
+}
 
 export const verifyOTP = async function (email: string, code: string) {
   const otpDataArray = await db

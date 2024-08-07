@@ -1,7 +1,7 @@
 {
   "name": "lib",
-	"version": "0.0.0",
-	"type": "module",
+  "version": "0.0.0",
+  "type": "module",
   "main": "index.ts",
   "scripts": {
     "db-generate-migrate": "run-s wait-turso-dev-port && drizzle-kit generate && drizzle-kit migrate",
@@ -11,15 +11,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-		"@libsql/client": "0.8.1",
-		"dotenv": "16.4.5",
-		"drizzle-orm": "0.32.2",
+    "@libsql/client": "0.8.1",
     "@lucia-auth/adapter-drizzle": "1.1.0",
+    "dotenv": "16.4.5",
+    "drizzle-orm": "0.32.2",
     "lucia": "3.2.0",
     "oslo": "1.2.1",
     "resend": "3.5.0"
-	},
-	"devDependencies": {
-		"drizzle-kit": "0.23.2"
-	}
+  },
+  "devDependencies": {
+    "@types/node": "22.1.0",
+    "drizzle-kit": "0.23.2"
+  }
 }

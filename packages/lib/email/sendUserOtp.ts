@@ -1,7 +1,8 @@
 import { resend } from "./resend";
+import { isProd } from "../utils/isProd";
 
 
-export const sendUserOtp = async (
+export const sendUserOtpEmail = async (
     email: string,
     code: string
 ) => {
@@ -11,9 +12,10 @@ export const sendUserOtp = async (
     const html = `Please use the code below to access your user
 ----------------
 Code: ${code}
-----------------`;
+----------------
+This code will expire in 10 minutes.`;
 
-    if (process.env.NODE_ENV === "production") {
+    if (isProd) {
         // const send = await
         resend.emails.send({
             from,
