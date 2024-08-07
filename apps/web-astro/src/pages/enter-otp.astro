@@ -17,7 +17,7 @@ if (user) {
 	<body>
         email: {Astro.url.searchParams.get('email')}
         <br>
-		<form action="/api/verify-otp" method="POST">
+		<form action="/api-auth/verify-otp" method="POST">
 			<input
 				type="hidden"
 				name="email"

@@ -19,12 +19,12 @@ const { session } = Astro.locals;
       <p>Your email is: {user.email}</p>
       <p>Your user ID is: {user.id}.</p>
       <p>Youre session ID is: {session?.id}</p>
-      <form method="post" action="/api/logout" id="logout">
+      <form method="post" action="/api-auth/logout" id="logout">
         <button>Sign out</button>
       </form>
     }
     {!user &&
-      <form action="/api/send-otp" method="POST">
+      <form action="/api-auth/send-otp" method="POST">
         <input type="email" name="email" required placeholder="email address" />
         <button>Login</button>
         <button>Register</button>
