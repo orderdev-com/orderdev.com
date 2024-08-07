@@ -143,7 +143,8 @@ export const verifyOTP = async function (email: string, code: string) {
       .where(eq(userTable.id, otpData.user_id));
   }
 
-  await luciaInstance.invalidateUserSessions(otpData.user_id);
+  // do we need to invalidate all user sessions here?
+  // await luciaInstance.invalidateUserSessions(otpData.user_id);
 
   const session = await luciaInstance.createSession(otpData.user_id, {});
   const sessionCookie = luciaInstance.createSessionCookie(session.id);
