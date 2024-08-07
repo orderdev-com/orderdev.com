@@ -1,13 +1,11 @@
 import { migrate } from 'drizzle-orm/libsql/migrator';
 import db from './db';
 
-async function main() {
+export const migrateDb = migrate;
+
+export const migrateDbNow = async function () {
+	// local run
 	await migrate(db, {
 		migrationsFolder: '../migrations',
 	});
 }
-
-main().catch((err) => {
-	console.error(err);
-	process.exit(1);
-});
