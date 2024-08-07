@@ -92,6 +92,8 @@ importers:
         specifier: 0.23.2
         version: 0.23.2
 
+  packages/proxy-caddy: {}
+
   packages/turso-local: {}
 
 packages:

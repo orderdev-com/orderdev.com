@@ -1,0 +1,11 @@
+{
+  "name": "proxy-caddy",
+  "version": "1.0.0",
+	"type": "module",
+  "scripts": {
+    "dev": "caddy run --config ./Caddyfile_dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
