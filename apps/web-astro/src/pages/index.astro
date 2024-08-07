@@ -1,9 +1,14 @@
 ---
+import HelloApi from '../components/HelloApi.astro';
 const user = Astro.locals.user;
 // if (!user) {
 //   return Astro.redirect("/login");
 // }
 const { session } = Astro.locals;
+globalThis.token = Astro.cookies.get("auth_session")?.value!;
+
+  // const client = createClient(Astro.cookies.get("auth_session"));
+  // client.api.users
 ---
 
 <html lang="en">
@@ -13,6 +18,9 @@ const { session } = Astro.locals;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro</title>
+    <script define:vars={{ token:  globalThis.token }}>
+      window.token = token;
+    </script>
   </head>
   <body>
     {user &&
@@ -30,5 +38,7 @@ const { session } = Astro.locals;
         <button>Register</button>
       </form>
     }
+
+  <HelloApi />
   </body>
 </html>

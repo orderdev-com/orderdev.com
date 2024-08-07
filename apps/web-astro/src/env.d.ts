@@ -5,3 +5,5 @@ declare namespace App {
 		user: import("lucia").User | null;
 	}
 }
+
+declare var token: string;

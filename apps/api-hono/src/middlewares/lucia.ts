@@ -3,7 +3,7 @@ import { luciaInstance } from "lib/auth/auth";
 
 export const luciaAuth = createMiddleware(async (c, next) => {
     const authorizationHeader = c.req.query('auth') || c.req.header('Authorization') || c.req.header('authorization') || null;
-    const sessionId = luciaInstance.readBearerToken(`Bearer ${authorizationHeader ?? ""}`);
+    const sessionId = luciaInstance.readBearerToken(`${authorizationHeader ?? ""}`);
     if (!sessionId) {
         c.set('session', null);
         c.set('user', null);
