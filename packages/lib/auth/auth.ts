@@ -48,7 +48,8 @@ export const luciaInstance = new Lucia(adapter, {
     expires: false,
     attributes: {
       // set to `true` when using HTTPS
-      secure: isProd,
+      // secure: isProd,
+      secure: true, // make it always secure, dev mode also uses HTTPS
     },
   },
   getUserAttributes: (attributes) => {
