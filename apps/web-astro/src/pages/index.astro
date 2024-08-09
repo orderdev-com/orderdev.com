@@ -1,24 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { createApiForServer } from "../serverLib/createApiForServer";
+// import { createApiForServer } from "../serverLib/createApiForServer";
 const pageTitle = "Home Page";
-const apiClient = createApiForServer(Astro.locals.session?.id);
-const whoamiData = await (await apiClient.api.users.whoami.$get()).json();
+// const apiClient = createApiForServer(Astro.locals.session?.id);
+// const whoamiData = await (await apiClient.api.users.whoami.$get()).json();
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-	<h2>My awesome blog subtitle</h2>
-	<h3>Greeting</h3>
-	<button>whoami</button>
-	<script>
-		import { createApiForClient } from "../clientScripts/createApiForClient";
-
-		const button = document.querySelector("button")!;
-		button.addEventListener("click", async () => {
-			const apiClient = createApiForClient();
-			const whoamiData = await (await apiClient.api.users.whoami.$get()).json();
-			console.log(JSON.stringify(whoamiData, null, 2));
-		});
-	</script>
-	<pre>{JSON.stringify(whoamiData, null, 2)}</pre>
+	<h2>Home</h2>
 </BaseLayout>

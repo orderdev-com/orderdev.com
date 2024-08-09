@@ -4,10 +4,14 @@ import Signout from './auth/Signout.astro';
 const user = Astro.locals.user;
 ---
 
-{
-	user && (
-        <Signout />
-	)
-}
-{!user && <Login/>}
+<div>
+	<nav>
+		<a href="/">Home</a>
+		<a href="/hello/page">hello/page</a>
+	</nav>
+</div>
 
+<div>
+	{user && (<Signout />)}
+	{!user && <Login/>}
+</div>
