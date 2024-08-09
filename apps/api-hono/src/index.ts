@@ -1,6 +1,6 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import { cors } from 'hono/cors'
+
 import { luciaAuth } from './middlewares/lucia'
 import { deleteExpiredOtps, HonoVariables, luciaInstance } from 'lib/auth/auth';
 import { usersApp } from './usersApp';
@@ -11,14 +11,33 @@ import { authApp } from './authApp';
 
 const app = new Hono<{ Variables: HonoVariables }>()
 app.use(luciaAuth);
-app.use(cors({
-  // `c` is a `Context` object
-  origin: (origin, c) => {
-    return checkRequestOrigin(origin)
-      ? origin
-      : `https://${process.env.ORIGIN}`
-  },
-}))
+// import { cors } from 'hono/cors'
+// app.use(cors({
+//   // `c` is a `Context` object
+//   origin: (origin, c) => {
+//     return checkRequestOrigin(origin)
+//       ? origin
+//       : `https://${process.env.ORIGIN}`
+//   },
+// }))
+
+app.use(async (c, next) => {
+  const origin = c.req.header('Origin');
+  if (origin) {
+    const isValid = await checkRequestOrigin(origin);
+    const allowedOrigin = isValid ? origin : `https://${process.env.ORIGIN}`;
+    c.header('Access-Control-Allow-Origin', allowedOrigin);
+  }
+  c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  c.header('Access-Control-Allow-Credentials', 'true');
+  
+  if (c.req.method === 'OPTIONS') {
+    return c.text('', 204);
+  }
+  
+  await next();
+});
 
 // app.get('/', (c) => {
 //   return c.text(`

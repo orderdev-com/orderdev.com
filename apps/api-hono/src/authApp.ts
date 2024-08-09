@@ -27,7 +27,7 @@ export const authApp = new Hono<{ Variables: HonoVariables }>()
                 throw new Error("missing referer");
             }
             // check origin before redirecting with checkRequestOrigin(origin)
-            if (!checkRequestOrigin(new URL(referer).origin)) {
+            if (!(await checkRequestOrigin(new URL(referer).origin))) {
                 console.log(`Invalid origin: ${referer}`);
                 return c.body("unknown-site", 400);
             }
@@ -83,7 +83,7 @@ export const authApp = new Hono<{ Variables: HonoVariables }>()
             const session = await validateGoogleCallback(code, storedCodeVerifier);
             const referer = new URL(storedRedirectUrl);
             // check origin before redirecting with checkRequestOrigin(origin)
-            if (!checkRequestOrigin(referer.origin)) {
+            if (!(await checkRequestOrigin(referer.origin))) {
                 console.log(`Invalid origin: ${referer.origin}`);
                 return c.body("unknown-site", 400);
             }
