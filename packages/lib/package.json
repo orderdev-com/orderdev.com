@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "db-generate-migrate": "run-s wait-turso-dev-port && drizzle-kit generate && drizzle-kit migrate",
+    "db-generate": "run-s wait-turso-dev-port && drizzle-kit generate",
+    "db-migrate": "run-s wait-turso-dev-port && drizzle-kit migrate",
     "wait-turso-dev-port": "wait-on tcp:8022"
   },
   "keywords": [],
@@ -12,6 +13,7 @@
   "dependencies": {
     "@libsql/client": "0.8.1",
     "@lucia-auth/adapter-drizzle": "1.1.0",
+    "arctic": "^0.10.2",
     "dotenv": "16.4.5",
     "drizzle-orm": "0.32.2",
     "lucia": "3.2.0",

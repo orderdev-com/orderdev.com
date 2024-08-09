@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "d507cee6-47d3-47b8-a1e5-de05d3da002b",
+  "id": "af6438b8-740d-4cca-8e80-693f4d7e3b55",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "user_otp": {
@@ -11,13 +11,6 @@
           "name": "id",
           "type": "text",
           "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
@@ -44,21 +37,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "user_otp_user_id_user_id_fk": {
-          "name": "user_otp_user_id_user_id_fk",
-          "tableFrom": "user_otp",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -88,21 +67,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "user_session_user_id_user_id_fk": {
-          "name": "user_session_user_id_user_id_fk",
-          "tableFrom": "user_session",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },

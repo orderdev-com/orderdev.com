@@ -5,7 +5,8 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "turbo run dev",
-    "db-generate-migrate": "turbo run db-generate-migrate",
+    "db-generate": "turbo run db-generate",
+    "db-migrate": "turbo run db-migrate",
     "build": "turbo run build"
   },
   "devDependencies": {

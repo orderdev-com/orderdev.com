@@ -1,5 +1,9 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
+/*/ 
+- please avoid adding foreign keys for now
+/*/
+
 const userTable = sqliteTable("user", {
     id: text("id").notNull().primaryKey(),
     email: text("email").notNull(),
@@ -9,14 +13,13 @@ const userTable = sqliteTable("user", {
 const sessionTable = sqliteTable("user_session", {
     id: text("id").notNull().primaryKey(),
     userId: text("user_id")
-        .notNull()
-        .references(() => userTable.id),
+        .notNull(),
+        // .references(() => userTable.id), // avoid adding foreign keys for now
     expiresAt: integer("expires_at").notNull(),
 });
 
 const otpTable = sqliteTable("user_otp", {
     id: text("id").notNull().primaryKey(),
-    user_id: text("user_id").notNull().references(() => userTable.id),
     email: text("email").notNull(),
     code: text("code").notNull(),
     expires_at: integer("expires_at").notNull()

@@ -22,11 +22,13 @@ export const POST: APIRoute = async ({
     );
   }
 
+  return new Response("success", { status: 200 });
   // return redirect(origin, 303);
-  return new Response(null, {
-    status: 303,
-    headers: {
-      Location: origin,
-    },
-  });
+
+  // return new Response(null, {
+  //   status: 303,
+  //   headers: {
+  //     Location: origin,
+  //   },
+  // });
 };

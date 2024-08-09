@@ -5,14 +5,16 @@ import { luciaAuth } from './middlewares/lucia'
 import { deleteExpiredOtps, HonoVariables, luciaInstance } from 'lib/auth/auth';
 import { usersApp } from './usersApp';
 import { migrateDb } from 'lib/db/migrate';
+import { checkRequestOrigin } from './lib/checkRequestOrigin';
 import db from 'lib/db/db';
+import { authApp } from './authApp';
 
 const app = new Hono<{ Variables: HonoVariables }>()
 app.use(luciaAuth);
 app.use(cors({
   // `c` is a `Context` object
   origin: (origin, c) => {
-    return origin.endsWith(process.env.ORIGIN!)
+    return checkRequestOrigin(origin)
       ? origin
       : `https://${process.env.ORIGIN}`
   },
@@ -32,6 +34,7 @@ app.use(cors({
 
 const routes = app.basePath('/api')
   .route('/users', usersApp)
+  .route('/auth', authApp)
 
 export type AppType = typeof routes
 

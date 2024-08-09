@@ -4,7 +4,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "mkdir -p dev-sqlite && turso dev --port 8022 --db-file ./dev-sqlite/local-turso.db",
-		"db-generate-migrate": "mkdir -p dev-sqlite && turso dev --port 8022 --db-file ./dev-sqlite/local-turso.db"
+		"db-generate": "mkdir -p dev-sqlite && turso dev --port 8022 --db-file ./dev-sqlite/local-turso.db",
+		"db-migrate": "mkdir -p dev-sqlite && turso dev --port 8022 --db-file ./dev-sqlite/local-turso.db"
 	},
 	"keywords": [],
 	"author": "",

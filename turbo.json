@@ -13,7 +13,11 @@
       "cache": false,
       "persistent": true
     },
-    "db-generate-migrate": {
+    "db-generate": {
+      "cache": false,
+      "persistent": false
+    },
+    "db-migrate": {
       "cache": false,
       "persistent": false
     }

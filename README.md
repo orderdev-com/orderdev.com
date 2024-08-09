@@ -20,18 +20,19 @@ dev requirements:
 
 add hosts file entries
 ```
-127.0.0.1 store.orderdev.local
-127.0.0.1 store2.orderdev.local
-127.0.0.1 store3.orderdev.local
-127.0.0.1 api.orderdev.local
+127.0.0.1 store.order.dev
+127.0.0.1 store2.order.dev
+127.0.0.1 store3.order.dev
+127.0.0.1 api.order.dev
 ```
 
 run dev:
 ```
 pnpm i
 mkdir -p ./packages/turso-local/dev-sqlite
-pnpm db-generate-migrate
+pnpm db-generate
+pnpm db-migrate
 pnpm dev
 ```
 
-then open https://store.orderdev.local in browser
+then open https://store.order.dev in browser

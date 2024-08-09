@@ -1,8 +1,16 @@
+---
+const redirectUrl = encodeURIComponent(Astro.url.href.replace('http://', 'https://')); // we are usign proxy so we need to replace http with https
+const googleLoginHref = `${import.meta.env.PUBLIC_API_URL}/api/auth/google-login?redirect=${redirectUrl}`;
+---
 <div id="auth-form">
     <form id="login-form">
         <input type="email" name="email" required placeholder="Email address" />
         <button type="submit">Login/Register</button>
     </form>
+    <br>
+    Astro.url.toJSON():{Astro.url.toString()}
+    <br>
+    <a href={googleLoginHref}>Sign in with google</a>
 </div>
 
 <script>
